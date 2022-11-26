@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mysql:
+    image: 'mysql:8.0'
+    container_name: 'database'
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+      MYSQL_ROOT_HOST: '${DB_HOST}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+    volumes:
+      - 'btl-mysql:/var/lib/mysql'
+volumes:
+  btl-mysql:
+    driver: local
