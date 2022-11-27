@@ -9,6 +9,7 @@ use PDOException;
 class BaseDao
 {
     private PDO $pdo;
+    const LIMIT = 25;
 
     public function __construct()
     {
@@ -24,5 +25,10 @@ class BaseDao
         if ($pdo) {
             error_log('connected to db');
         }
+    }
+
+    public function getPDO(): PDO
+    {
+        return $this->pdo;
     }
 }
