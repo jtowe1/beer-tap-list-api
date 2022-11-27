@@ -4,34 +4,15 @@ namespace BTL\Database;
 
 use PDO;
 
-class Config
+abstract class Config
 {
-    public function __construct(
-        private string $host,
-        private string $db,
-        private string $user,
-        private string $password
-    )
+    private static function getDsn(): string
     {
+        return "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']};charset=utf8mb4";
     }
 
-    public static function createFromVariables(array $variables)
+    public static function getPDO(): PDO
     {
-        return new self(
-            $variables['DB_HOST'],
-            $variables['DB_DATABASE'],
-            $variables['DB_USERNAME'],
-            $variables['DB_PASSWORD']
-        );
-    }
-
-    private function getDsn(): string
-    {
-        return "mysql:host={$this->host};dbname={$this->db};charset=utf8mb4";
-    }
-
-    public function createConnection(): PDO
-    {
-        return new PDO($this->getDsn(), $this->user, $this->password);
+        return new PDO(static::getDsn(), $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
     }
 }

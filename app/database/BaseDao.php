@@ -2,8 +2,7 @@
 
 namespace BTL\Database;
 
-use BTL\Config;
-use Exception;
+use BTL\Database\Config as DatabaseConfig;
 use PDO;
 use PDOException;
 
@@ -14,14 +13,7 @@ class BaseDao
     public function __construct()
     {
         try {
-            $config = Config::create();
-            $dbConfig = $config->getDatabaseConfig();
-        } catch (Exception $e) {
-            error_log($e->getMessage());
-        }
-
-        try {
-            $pdo = $dbConfig->createConnection();
+            $pdo = DatabaseConfig::getPDO();
 
         } catch (PDOException $e) {
             error_log($e->getMessage());
