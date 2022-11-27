@@ -2,7 +2,9 @@
 
 namespace BTL\Model\Beer;
 
-class Dao
+use BTL\Database\BaseDao;
+
+class Dao extends BaseDao
 {
 
 }
