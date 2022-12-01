@@ -1,4 +1,4 @@
-CREATE TABLE from (
+CREATE TABLE ref_from (
     id INT auto_increment PRIMARY KEY,
-    from VARCHAR(255)
+    `from` VARCHAR(255)
 );
