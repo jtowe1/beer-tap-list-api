@@ -12,6 +12,7 @@ class Dao extends BaseDao
         'id',
         'name',
         'style_id',
+        'from_id',
         'created',
         'last_updated'
     ];
@@ -20,13 +21,17 @@ class Dao extends BaseDao
     {
         $sql = "
         INSERT INTO beer (
+            id,
             name,
             style_id,
+            from_id,
             created,
             last_updated
         ) VALUES (
+            :id,
             :name,
             :style_id,
+            :from_id,
             NOW(),
             null
         ) ON DUPLICATE KEY UPDATE
@@ -36,8 +41,10 @@ class Dao extends BaseDao
             last_updated = NOW()";
 
         $stmt = $this->getPDO()->prepare($sql);
+        $stmt->bindValue(':id', $beer->getId(), PDO::PARAM_INT);
         $stmt->bindValue(':name', $beer->getName(), PDO::PARAM_STR);
         $stmt->bindValue(':style_id', $beer->getStyleId(), PDO::PARAM_INT);
+        $stmt->bindValue(':from_id', $beer->getFromId(), PDO::PARAM_INT);
         $result = $stmt->execute();
 
         if ($result && $beer->getId() === null) {
