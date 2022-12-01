@@ -17,13 +17,13 @@ class BaseDao
             $pdo = DatabaseConfig::getPDO();
 
         } catch (PDOException $e) {
-            error_log($e->getMessage());
+            throw new DatabaseException('Failed to build the pdo because: ' . $e->getMessage());
         }
 
         $this->pdo = $pdo;
 
         if ($pdo) {
-            error_log('connected to db');
+            error_log('[INFO] PDO built successfully');
         }
     }
 
