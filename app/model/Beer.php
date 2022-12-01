@@ -10,6 +10,7 @@ class Beer
         private ?int $id,
         private string $name,
         private int $styleId,
+        private int $fromId,
         private CarbonImmutable $created,
         private CarbonImmutable $lastUpdated
     ) {
@@ -36,5 +37,10 @@ class Beer
     public function getStyleId(): int
     {
         return $this->styleId;
+    }
+
+    public function getFromId(): int
+    {
+        return $this->fromId;
     }
 }
