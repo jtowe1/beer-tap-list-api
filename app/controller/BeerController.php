@@ -2,7 +2,9 @@
 
 namespace BTL\Controller;
 
+use BTL\Hydrator\BeerHydrator;
 use BTL\Model\Beer\Dao;
+use BTL\Transformer\BeerTransformer;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -13,9 +15,14 @@ class BeerController
         $offset = $request->getQueryParams()['offset'] ?? 0;
 
         $beerDao = new Dao();
-        $beers = $beerDao->getAllStartingAt($offset);
+        $rows = $beerDao->getAllStartingAt($offset);
+        $transformedBeers = [];
+        foreach($rows as $row) {
+            $beer = BeerHydrator::hydrate($row);
+            $transformedBeers[] = BeerTransformer::transform($beer);
+        }
         $body = $response->getBody();
-        $body->write(json_encode($beers));
+        $body->write(json_encode($transformedBeers));
         return $response->withHeader('Content-Type', 'application/json');
     }
 }
